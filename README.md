@@ -6,7 +6,7 @@ This role manages LXD/LXC Containers on a remote Linux Container Host.  https://
 Requirements
 ------------
 
-* LXD 2.0 or greater must be installed on the LXD host and ansible server.
+* LXD 2.0 or greater must be installed on the LXD host and ansible server (it should already be installed by default on Ubuntu 16.04)
 
 * LXD should already be setup on the remote host using `sudo lxd init` or an LXD host Ansible Role such as [juju4/lxd](https://galaxy.ansible.com/juju4/lxd/)
 

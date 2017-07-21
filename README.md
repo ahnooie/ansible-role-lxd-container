@@ -8,7 +8,7 @@ Requirements
 
 * LXD 2.0 or greater must be installed on the LXD host and ansible server (it should already be installed by default on Ubuntu 16.04)
 
-* LXD should already be setup on the remote host using `sudo lxd init` or an LXD host Ansible Role such as [juju4/lxd](https://galaxy.ansible.com/juju4/lxd/)
+* LXD should already be setup on the remote host using `sudo lxd init` or using an Ansible Role such as [juju4/lxd](https://galaxy.ansible.com/juju4/lxd/)
 
 * In order for Ansible to manage an LXD host remotely the following commands must be run ahead of time (from: https://stgraber.org/2016/04/12/lxd-2-0-remote-hosts-and-container-migration-612/
 

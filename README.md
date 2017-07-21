@@ -1,17 +1,33 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+This role manages LXD/LXC Containers on a Linux host.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+LXD 2.0 or greater
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+These variables are documented here: http://docs.ansible.com/ansible/latest/lxd_container_module.html
+
+state: started (default), stopped, restarted, absent, frozen
+type: image (default)
+mode: pull (default)
+server: https://images.linuxcontainers.org (default)
+protocol: lxd (default)
+alias: ubuntu/xenial/amd64 (default)
+wait_for_ipv4_addresses: true (default)
+timeout: 600 (default)
+
+public_key: "{{ lookup('file','~/.ssh/id_rsa.pub') }}" (default) - path to public ssh key to install in container
+install_python: true (default)
+
+enable_ssh: true (default) - installs and enables the openssh server in the container.
+
+
 
 Dependencies
 ------------

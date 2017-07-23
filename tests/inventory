@@ -1,2 +1,6 @@
-localhost
+# Remote LXD Host
+[lxd]
+localhost ansible_user=root
 
+[linux-containers]
+ubuntu01.example.com ansible_connection=lxd ansible_host=lxd4:ubuntu01 lxd_host=lxd4.example.com alias=ubuntu/xenial/amd64

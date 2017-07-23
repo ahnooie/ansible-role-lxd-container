@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: linux-containers
+  gather_facts: false
   roles:
-    - lxd-container
+  - lxd-container

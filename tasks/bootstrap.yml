@@ -1,0 +1,33 @@
+---
+  - name: check python is installed in "{{ inventory_hostname_short }}"
+#    delegate_to: "{{ inventory_hostname_short }}"
+    raw: dpkg -s python
+    register: python_install_check
+    failed_when: python_install_check.rc not in [0, 1]
+    changed_when: false
+
+  - name: install python in  "{{ inventory_hostname_short }}"
+#    delegate_to: "{{ inventory_hostname_short }}"
+    raw: apt-get install -y python
+    when: python_install_check.rc == 1
+
+
+  - name: copy pub key in "{{ inventory_hostname_short }}"
+#    delegate_to: "{{ inventory_hostname_short }}"
+    authorized_key:
+      user: root
+      state: present
+      key: "{{ public_key }}"
+    when: public_key is defined
+
+  - block:
+    - name: install ssh in "{{ inventory_hostname_short }}"
+#      delegate_to: "{{ inventory_hostname_short }}"
+      apt:
+        name: openssh-server
+        state: latest
+
+    - name: ssh started in "{{ inventory_hostname_short }}"
+#      delegate_to: "{{ inventory_hostname_short }}"
+      systemd: state=started name=sshd
+    when: enable_ssh

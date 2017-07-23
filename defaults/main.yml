@@ -10,4 +10,6 @@ wait_for_ipv4_addresses: true
 timeout: 600
 public_key: "{{ lookup('file','public_keys/ben.pub') }}"
 enable_ssh: true
-inventory_group: "{{ groups['linux-containers'] }}"
+
+# below most be set in playbook, group_vars or host_vars
+# lxd_host: - your lxd container host

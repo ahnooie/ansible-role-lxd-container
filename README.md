@@ -82,6 +82,7 @@ fedora01.example.com ansible_connection=lxd ansible_host=lxd4:fedora01 lxd_host=
 ```
 ### Playbook
 
+```
 ---
 - hosts: linux-containers
   gather_facts: false
@@ -89,7 +90,7 @@ fedora01.example.com ansible_connection=lxd ansible_host=lxd4:fedora01 lxd_host=
     public_key: "{{ lookup('file','public_keys/id_rsa.pub') }}"
   roles:
   - lxd-container
-
+```
 
 
 License

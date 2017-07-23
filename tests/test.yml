@@ -2,4 +2,4 @@
 - hosts: linux-containers
   gather_facts: false
   roles:
-  - ansible-role-lxd-container
+  - ../../ansible-role-lxd-container

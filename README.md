@@ -1,4 +1,4 @@
-Role Name
+LXD Container Ansible Role
 =========
 
 This role manages LXD/LXC Containers on a remote Linux Container Host.  https://www.ubuntu.com/containers/lxd
@@ -17,18 +17,18 @@ Requirements
 On the remote LXD host:
 
 ```
-lxc config set core.https_address [::]:8443
-lxc config set core.trust_password replace-this-with-a-secure-password
+$ lxc config set core.https_address [::]:8443
+$ lxc config set core.trust_password replace-this-with-a-secure-password
 ```
 
 On the Ansible host:
 
 ```
-lxc config set core.https_address [::]:8443
+$ lxc config set core.https_address [::]:8443
 ```
 
 ```
-lxc remote add lxd4 lxd4.example.com
+$ lxc remote add lxd4 lxd4.example.com
 ```
 (replace lxd4.example.com with the hostname of your LXD host, 'lxd4' can be named whatever you want, you'll need to reference it in the inventory file)
 
@@ -60,12 +60,20 @@ Dependencies
 
 None
 
-Example Playbook
+
+Install
+-------
+
+```
+$ ansible-galaxy install ahnooie.lxd-container
+```
+
+Example
 ----------------
 
-The following example will install 6 containers on the lxd4.example.com LXD host; and on each host install python, add a public ssh key for the root user, install and start the sshd service.
+The following example will install 6 containers with various Linux distributions on the lxd4.example.com LXD host; and on each host install python, add a public ssh key for the root user, install and start the sshd service.
 
-### Inventory File
+### Inventory File Example
 
 
 ```
@@ -75,14 +83,18 @@ lxd4.example.com ansible_user=root
 
 # Containers on LXD Hosts
 [linux-containers]
-ubuntu01.example.com ansible_connection=lxd ansible_host=lxd4:ubuntu01 lxd_host=lxd4.example.com alias=ubuntu/xenial/amd64
-ubuntu02.example.com ansible_connection=lxd ansible_host=lxd4:ubuntu02 lxd_host=lxd4.example.com alias=ubuntu/zesty/amd64
-centos01.example.com ansible_connection=lxd ansible_host=lxd4:centos01 lxd_host=lxd4.example.com alias=centos/7/amd64
-centos02.example.com ansible_connection=lxd ansible_host=lxd4:centos02 lxd_host=lxd4.example.com alias=centos/6/amd64
-debian01.example.com ansible_connection=lxd ansible_host=lxd4:debian01 lxd_host=lxd4.example.com alias=debian/stretch/amd64
-fedora01.example.com ansible_connection=lxd ansible_host=lxd4:fedora01 lxd_host=lxd4.example.com alias=fedora/25/amd64
+ubuntu01.example.com ansible_host=lxd4:ubuntu01 alias=ubuntu/xenial/amd64
+ubuntu02.example.com ansible_host=lxd4:ubuntu02 alias=ubuntu/zesty/amd64
+centos01.example.com ansible_host=lxd4:centos01 alias=centos/7/amd64
+centos02.example.com ansible_host=lxd4:centos02 alias=centos/6/amd64
+debian01.example.com ansible_host=lxd4:debian01 alias=debian/stretch/amd64
+fedora01.example.com ansible_host=lxd4:fedora01 alias=fedora/25/amd64
+
+[linux-containers:vars]
+ansible_connection=lxd
+lxd_host=lxd4.example.com
 ```
-### Playbook
+### Playbook Example containers.yml
 
 ```
 ---
@@ -91,9 +103,15 @@ fedora01.example.com ansible_connection=lxd ansible_host=lxd4:fedora01 lxd_host=
   vars:
     public_key: "{{ lookup('file','public_keys/id_rsa.pub') }}"
   roles:
-  - lxd-container
+  - ahnooie.lxd-container
 ```
 
+### Playbook Command Example
+
+```
+$ ansible-playbook -i inventory containers.yml
+
+```
 
 License
 -------

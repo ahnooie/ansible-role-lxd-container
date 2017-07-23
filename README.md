@@ -71,7 +71,7 @@ $ ansible-galaxy install ahnooie.lxd-container
 Example
 ----------------
 
-The following example will install 6 containers on the lxd4.example.com LXD host; and on each host install python, add a public ssh key for the root user, install and start the sshd service.
+The following example will install 6 containers with various Linux distributions on the lxd4.example.com LXD host; and on each host install python, add a public ssh key for the root user, install and start the sshd service.
 
 ### Inventory File Example
 
@@ -83,12 +83,16 @@ lxd4.example.com ansible_user=root
 
 # Containers on LXD Hosts
 [linux-containers]
-ubuntu01.example.com ansible_connection=lxd ansible_host=lxd4:ubuntu01 lxd_host=lxd4.example.com alias=ubuntu/xenial/amd64
-ubuntu02.example.com ansible_connection=lxd ansible_host=lxd4:ubuntu02 lxd_host=lxd4.example.com alias=ubuntu/zesty/amd64
-centos01.example.com ansible_connection=lxd ansible_host=lxd4:centos01 lxd_host=lxd4.example.com alias=centos/7/amd64
-centos02.example.com ansible_connection=lxd ansible_host=lxd4:centos02 lxd_host=lxd4.example.com alias=centos/6/amd64
-debian01.example.com ansible_connection=lxd ansible_host=lxd4:debian01 lxd_host=lxd4.example.com alias=debian/stretch/amd64
-fedora01.example.com ansible_connection=lxd ansible_host=lxd4:fedora01 lxd_host=lxd4.example.com alias=fedora/25/amd64
+ubuntu01.example.com ansible_host=lxd4:ubuntu01 alias=ubuntu/xenial/amd64
+ubuntu02.example.com ansible_host=lxd4:ubuntu02 alias=ubuntu/zesty/amd64
+centos01.example.com ansible_host=lxd4:centos01 alias=centos/7/amd64
+centos02.example.com ansible_host=lxd4:centos02 alias=centos/6/amd64
+debian01.example.com ansible_host=lxd4:debian01 alias=debian/stretch/amd64
+fedora01.example.com ansible_host=lxd4:fedora01 alias=fedora/25/amd64
+
+[linux-containers:vars]
+ansible_connection=lxd
+lxd_host=lxd4.example.com
 ```
 ### Playbook Example containers.yml
 

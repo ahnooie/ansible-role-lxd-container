@@ -17,18 +17,18 @@ Requirements
 On the remote LXD host:
 
 ```
-lxc config set core.https_address [::]:8443
-lxc config set core.trust_password replace-this-with-a-secure-password
+$ lxc config set core.https_address [::]:8443
+$ lxc config set core.trust_password replace-this-with-a-secure-password
 ```
 
 On the Ansible host:
 
 ```
-lxc config set core.https_address [::]:8443
+$ lxc config set core.https_address [::]:8443
 ```
 
 ```
-lxc remote add lxd4 lxd4.example.com
+$ lxc remote add lxd4 lxd4.example.com
 ```
 (replace lxd4.example.com with the hostname of your LXD host, 'lxd4' can be named whatever you want, you'll need to reference it in the inventory file)
 

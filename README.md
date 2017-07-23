@@ -103,7 +103,7 @@ lxd_host=lxd4.example.com
   vars:
     public_key: "{{ lookup('file','public_keys/id_rsa.pub') }}"
   roles:
-  - lxd-container
+  - ahnooie.lxd-container
 ```
 
 ### Playbook Command Example

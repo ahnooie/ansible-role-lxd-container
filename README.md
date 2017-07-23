@@ -3,6 +3,8 @@ Role Name
 
 This role manages LXD/LXC Containers on a remote Linux Container Host.  https://www.ubuntu.com/containers/lxd
 
+[![Build Status](https://travis-ci.org/ahnooie/ansible-role-lxd-container.svg?branch=master)](https://travis-ci.org/ahnooie/ansible-role-lxd-container)
+
 Requirements
 ------------
 

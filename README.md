@@ -49,6 +49,7 @@ These variables are documented here: http://docs.ansible.com/ansible/latest/lxd_
 Additional Variables:
 * `public_key:` "{{ lookup('file','~/.ssh/id_rsa.pub') }}" (default) - path to public ssh key to install in container
 * `enable_ssh:` true (default) - installs and enables the openssh server in the container.
+* `lxd_host:` your lxd container host
 
 
 

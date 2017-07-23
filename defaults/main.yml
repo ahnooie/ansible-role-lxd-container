@@ -8,7 +8,7 @@ protocol: lxd
 alias: ubuntu/xenial/amd64
 wait_for_ipv4_addresses: true
 timeout: 600
-public_key: "{{ lookup('file','public_keys/ben.pub') }}"
+public_key: "{{ lookup('file','~/.ssh/id_rsa.pub') }}"
 enable_ssh: true
 
 # below most be set in playbook, group_vars or host_vars

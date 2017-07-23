@@ -1,0 +1,16 @@
+---
+# tasks file for lxd-container
+  - name: lxd_container 
+    delegate_to: "{{ lxd_host }}"
+    lxd_container:
+      name: "{{ inventory_hostname_short }}"
+      state: "{{ state }}"
+      source:
+        type: "{{ type }}"
+        mode: "{{ mode }}"
+        server: "{{ server }}"
+        protocol: "{{ protocol }}"
+        alias: "{{ alias }}"
+      profiles: ["default"]
+      wait_for_ipv4_addresses: "{{ wait_for_ipv4_addresses }}"
+      timeout: "{{ timeout }}"

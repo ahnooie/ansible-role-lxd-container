@@ -1,38 +1,104 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+This role manages LXD/LXC Containers on a remote Linux Container Host.  https://www.ubuntu.com/containers/lxd
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+* LXD 2.0 or greater must be installed on the LXD host and ansible server (it should already be installed by default on Ubuntu 16.04)
+
+* LXD should already be setup on the remote host using `sudo lxd init` or using an Ansible Role such as [juju4/lxd](https://galaxy.ansible.com/juju4/lxd/)
+
+* In order for Ansible to manage an LXD host remotely the following commands must be run ahead of time:
+
+On the remote LXD host:
+
+```
+lxc config set core.https_address [::]:8443
+lxc config set core.trust_password replace-this-with-a-secure-password
+```
+
+On the Ansible host:
+
+```
+lxc config set core.https_address [::]:8443
+```
+
+```
+lxc remote add lxd4 lxd4.example.com
+```
+(replace lxd4.example.com with the hostname of your LXD host, 'lxd4' can be named whatever you want, you'll need to reference it in the inventory file)
+
+* Tested on an LXD host and Ansible host both using Ubuntu 16.04 LTS (may work with other distros)
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+These variables are documented here: http://docs.ansible.com/ansible/latest/lxd_container_module.html
+
+* `state:` started (default), stopped, restarted, absent, frozen
+* `type:` image (default)
+* `mode:` pull (default)
+* `server:` https://images.linuxcontainers.org (default)
+* `protocol:` lxd (default)
+* `alias:` ubuntu/xenial/amd64 (default)
+* `wait_for_ipv4_addresses:` true (default)
+* `timeout:` 600 (default)
+
+Additional Variables:
+* `public_key:` "{{ lookup('file','~/.ssh/id_rsa.pub') }}" (default) - path to public ssh key to install in container
+* `enable_ssh:` true (default) - installs and enables the openssh server in the container.
+* `lxd_host:` your lxd container host
+
+
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+The following example will install 6 containers on the lxd4.example.com LXD host; and on each host install python, add a public ssh key for the root user, install and start the sshd service.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+### Inventory File
+
+
+```
+# Remote LXD Host
+[lxd]
+lxd4.example.com ansible_user=root
+
+# Containers on LXD Hosts
+[linux-containers]
+ubuntu01.example.com ansible_connection=lxd ansible_host=lxd4:ubuntu01 lxd_host=lxd4.example.com alias=ubuntu/xenial/amd64
+ubuntu02.example.com ansible_connection=lxd ansible_host=lxd4:ubuntu02 lxd_host=lxd4.example.com alias=ubuntu/zesty/amd64
+centos01.example.com ansible_connection=lxd ansible_host=lxd4:centos01 lxd_host=lxd4.example.com alias=centos/7/amd64
+centos02.example.com ansible_connection=lxd ansible_host=lxd4:centos02 lxd_host=lxd4.example.com alias=centos/6/amd64
+debian01.example.com ansible_connection=lxd ansible_host=lxd4:debian01 lxd_host=lxd4.example.com alias=debian/stretch/amd64
+fedora01.example.com ansible_connection=lxd ansible_host=lxd4:fedora01 lxd_host=lxd4.example.com alias=fedora/25/amd64
+```
+### Playbook
+
+```
+---
+- hosts: linux-containers
+  gather_facts: false
+  vars:
+    public_key: "{{ lookup('file','public_keys/id_rsa.pub') }}"
+  roles:
+  - lxd-container
+```
+
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Created by [Benjamin Bryan](https://b3n.org)

@@ -1,2 +1,5 @@
 ---
-# tasks file for lxd-container
+  - include: manage_containers.yml
+  - include: bootstrap.yml
+    when: state == 'started'
+  

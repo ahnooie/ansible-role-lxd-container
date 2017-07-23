@@ -1,0 +1,39 @@
+---
+  - name: check if python installed
+    raw: python --version
+    register: python_install_check
+#    failed_when: python_install_check.rc not in [0, 1]
+    ignore_errors: yes
+    changed_when: false
+
+  - block:
+    - name: install python apt-get
+      raw: apt-get install -y python
+    rescue:
+    - block:
+      - name: install python yum
+        raw: yum -y install python-simplejson
+      rescue:
+        - name: install python dnf
+          raw: dnf install -y python2 python2-dnf libselinux-python
+    when:  python_install_check.rc == 127
+
+  - name: set authorized_keys
+    authorized_key:
+      user: root
+      state: present
+      key: "{{ public_key }}"
+    when: public_key is defined
+
+  - name: setup
+    setup:
+
+
+  - block:
+    - name: install openssh-server
+      package:
+        name: openssh-server
+        state: latest
+    - name: start sshd service
+      service: state=started name=sshd 
+    when: enable_ssh

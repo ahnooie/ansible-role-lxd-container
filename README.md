@@ -99,4 +99,4 @@ MIT
 Author Information
 ------------------
 
-Created by [Benjamin Bryan](https://example.com)
+Created by [Benjamin Bryan](https://b3n.org)

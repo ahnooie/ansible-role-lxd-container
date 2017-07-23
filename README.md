@@ -1,4 +1,4 @@
-Role Name
+LXD Container Ansible Role
 =========
 
 This role manages LXD/LXC Containers on a remote Linux Container Host.  https://www.ubuntu.com/containers/lxd
@@ -60,12 +60,20 @@ Dependencies
 
 None
 
-Example Playbook
+
+Install
+-------
+
+```
+$ ansible-galaxy install ahnooie.lxd-container
+```
+
+Example
 ----------------
 
 The following example will install 6 containers on the lxd4.example.com LXD host; and on each host install python, add a public ssh key for the root user, install and start the sshd service.
 
-### Inventory File
+### Inventory File Example
 
 
 ```
@@ -82,7 +90,7 @@ centos02.example.com ansible_connection=lxd ansible_host=lxd4:centos02 lxd_host=
 debian01.example.com ansible_connection=lxd ansible_host=lxd4:debian01 lxd_host=lxd4.example.com alias=debian/stretch/amd64
 fedora01.example.com ansible_connection=lxd ansible_host=lxd4:fedora01 lxd_host=lxd4.example.com alias=fedora/25/amd64
 ```
-### Playbook
+### Playbook Example containers.yml
 
 ```
 ---
@@ -94,6 +102,12 @@ fedora01.example.com ansible_connection=lxd ansible_host=lxd4:fedora01 lxd_host=
   - lxd-container
 ```
 
+### Playbook Command Example
+
+```
+$ ansible-playbook -i inventory containers.yml
+
+```
 
 License
 -------

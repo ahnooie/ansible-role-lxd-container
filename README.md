@@ -10,13 +10,13 @@ Requirements
 
 * LXD should already be setup on the remote host using `sudo lxd init` or using an Ansible Role such as [juju4/lxd](https://galaxy.ansible.com/juju4/lxd/)
 
-* In order for Ansible to manage an LXD host remotely the following commands must be run ahead of time (from: https://stgraber.org/2016/04/12/lxd-2-0-remote-hosts-and-container-migration-612/
+* In order for Ansible to manage an LXD host remotely the following commands must be run ahead of time:
 
 On the remote LXD host:
 
 ```
 lxc config set core.https_address [::]:8443
-lxc config set core.trust_password something-secure
+lxc config set core.trust_password replace-this-with-a-secure-password
 ```
 
 On the Ansible host:
@@ -30,7 +30,7 @@ lxc remote add lxd4 lxd4.example.com
 ```
 (replace lxd4.example.com with the hostname of your LXD host, 'lxd4' can be named whatever you want, you'll need to reference it in the inventory file)
 
-* Ubuntu 16.04 LTS (may work with other distros)
+* Tested on an LXD host and Ansible host both using Ubuntu 16.04 LTS (may work with other distros)
 
 Role Variables
 --------------

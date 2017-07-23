@@ -1,53 +1,53 @@
 ---
 # tasks file for lxd-container
-tasks:
-  - name: lxd_container {{ inventory_hostname_short }}
+  - name: lxd_container "{{ item }}"
     lxd_container:
-      name: {{ inventory_hostname_short }}
-      state: {{ state }}
+      name: "{{ item }}"
+      state: "{{ state }}"
       source:
-        type: {{ type }}
-        mode: {{ mode }}
-        server: {{ server }}
-        protocol: {{ protocol }}
-        alias: {{ alias }}
+        type: "{{ type }}"
+        mode: "{{ mode }}"
+        server: "{{ server }}"
+        protocol: "{{ protocol }}"
+        alias: "{{ alias }}"
       profiles: ["default"]
-      wait_for_ipv4_addresses: {{ wait_for_ipv4_addresses }}
-      timeout: {{ timeout }}
+      wait_for_ipv4_addresses: "{{ wait_for_ipv4_addresses }}"
+      timeout: "{{ timeout }}"
+    with_items: "{{ groups['linux-containers'] }}"
 
-  - block:
-  
-    - name: check python is installed in {{ inventory_hostname_short }}
-      delegate_to: {{ inventory_hostname_short }}
-      raw: dpkg -s python
-      register: python_install_check
-      failed_when: python_install_check.rc not in [0, 1]
-      changed_when: false
+#  - block:
+#  
+#    - name: check python is installed in "{{ inventory_hostname_short }}"
+#      delegate_to: "{{ inventory_hostname_short }}"
+#      raw: dpkg -s python
+#      register: python_install_check
+#      failed_when: python_install_check.rc not in [0, 1]
+#      changed_when: false
+#
+#    - name: install python in  "{{ inventory_hostname_short }}"
+#      delegate_to: "{{ inventory_hostname_short }}"
+#3      raw: apt-get install -y python
+#      when: python_install_check.rc == 1
+#
+#
+#    - name: copy pub key in "{{ inventory_hostname_short }}"
+#      delegate_to: "{{ inventory_hostname_short }}"
+#      authorized_key:
+#        user: root
+#        state: present
+#        key: "{{ public_key }}"
+#      when: public_key is defined
+#
+#    - block:
+#      - name: install ssh in "{{ inventory_hostname_short }}"
+#        delegate_to: "{{ inventory_hostname_short }}"
+#        apt:
+#          name: openssh-server
+#          state: latest
+#
+#      - name: ssh started in "{{ inventory_hostname_short }}"
+#        delegate_to: "{{ inventory_hostname_short }}"
+#        systemd: state=started name=sshd
+#    when: enable_ssh
 
-    - name: install python in  {{ inventory_hostname_short }}
-      delegate_to: {{ inventory_hostname_short }}
-      raw: apt-get install -y python
-      when: python_install_check.rc == 1
-
-
-    - name: copy pub key in {{ inventory_hostname_short }}
-      delegate_to: {{ inventory_hostname_short }}
-      authorized_key:
-        user: root
-        state: present
-        key: {{ public_key }}
-      when: public_key is defined
-
-    - block:
-      - name: install ssh in {{ inventory_hostname_short }}
-        delegate_to: {{ inventory_hostname_short }}
-        apt:
-          name: openssh-server
-          state: latest
-
-      - name: ssh started in {{ inventory_hostname_short }}
-        delegate_to: {{ inventory_hostname_short }}
-        systemd: state=started name=sshd
-    when: enable_ssh
-
-  when: state == 'started'
+  #when: state == 'started'

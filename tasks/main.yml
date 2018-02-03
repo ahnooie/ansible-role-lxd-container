@@ -1,5 +1,5 @@
 ---
-  - include: manage_containers.yml
-  - include: bootstrap.yml
+  - import_tasks: manage_containers.yml
+  - import_tasks: bootstrap.yml
     when: state == 'started'
   

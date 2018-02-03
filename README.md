@@ -84,11 +84,10 @@ lxd4.example.com ansible_user=root
 # Containers on LXD Hosts
 [linux-containers]
 ubuntu01.example.com ansible_host=lxd4:ubuntu01 alias=ubuntu/xenial/amd64
-ubuntu02.example.com ansible_host=lxd4:ubuntu02 alias=ubuntu/zesty/amd64
 centos01.example.com ansible_host=lxd4:centos01 alias=centos/7/amd64
 centos02.example.com ansible_host=lxd4:centos02 alias=centos/6/amd64
 debian01.example.com ansible_host=lxd4:debian01 alias=debian/stretch/amd64
-fedora01.example.com ansible_host=lxd4:fedora01 alias=fedora/25/amd64
+fedora01.example.com ansible_host=lxd4:fedora01 alias=fedora/27/amd64
 
 [linux-containers:vars]
 ansible_connection=lxd
